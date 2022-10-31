@@ -1,0 +1,29 @@
+* {
+    font-family: Inter, system-ui, sans-serif;
+    color: white;
+}
+
+h1 {
+    font-size: 70px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    height: fit-content;
+}
+
+p {
+    opacity: 0.7;
+}
+
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    background: radial-gradient(#222, #000)
+}
