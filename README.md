@@ -57,7 +57,7 @@ A string, either `x` or `y`. This really only changes the way it's skewed (`skew
 
 ## Example
 
-The example can be found either at `example.html` or [this Codepen link]().
+The example can be found either at `example.html` or [this Codepen link](https://codepen.io/northernlights3/pen/KKeVKeY).
 
 ---
 _Current Version: 0.1.0 (beta)_
