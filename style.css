@@ -1,23 +1,8 @@
 * {
     font-family: Inter, system-ui, sans-serif;
     color: white;
+    margin: 0;
 }
-
-h1 {
-    font-size: 70px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    height: fit-content;
-}
-
-p {
-    opacity: 0.7;
-}
-
 
 body {
     display: flex;
@@ -26,4 +11,29 @@ body {
     flex-direction: column;
     height: 100vh;
     background: radial-gradient(#222, #000)
+}
+
+h1 {
+    font-size: 70px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    height: fit-content;
+}
+
+p#sub {
+    opacity: 0.7;
+    margin-top: 10px;
+}
+
+a {
+    opacity: 0.8;
+    transition: .2s;
+}
+
+a:hover {
+    opacity: 1;
 }

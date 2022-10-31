@@ -1,69 +1,88 @@
-const Wobbler = {
-    wobble(...args) {
-        initialize(...args);
+function WobbleText(...args) {
+    initialize(...args);
 
-        function initialize(element, options) {
-            // Save what we need to wobble
-            let content = element.textContent;
-            if (!content) throw new Error('no text content on selected element');
+    function initialize(element, options) {
+        // Save what we need to wobble
+        let content = element.textContent;
+        if (!content) throw new Error('no text content on selected element');
 
-            // Set default values if not set by user
+        // Set default values if not set by user
+        options ??= {},
             options.resolution ??= 20,
-                options.speed ??= 30,
-                options.intensity ??= 10,
-                options.wobbliness ??= 1,
-                options.direction ??= 'x',
-                options.overlapProtection ??= 0;
+            options.speed ??= 30,
+            options.intensity ??= 10,
+            options.wobbliness ??= 1,
+            options.direction ??= 'x',
+            options.overlapProtection ??= 0;
 
-            if (options.direction.toUpperCase() !== 'X' && options.direction.toUpperCase() !== 'Y') throw new Error('invalid direction');
+        if (options.direction.toUpperCase() !== 'X' && options.direction.toUpperCase() !== 'Y') throw new Error('invalid direction');
 
-            // Divide overlap protection by 10 and invert it
-            options.overlapProtection = (1 - options.overlapProtection) / 10;
+        // Divide overlap protection by 10 and invert it
+        options.overlapProtection = (1 - options.overlapProtection) / 10;
 
-            // Create a container so we can have 3 text elements
-            // in the same container
-            let cont = document.createElement(element.tagName);
-            cont.style.position = "relative";
-            element.replaceWith(cont);
+        // Create a container so we can have 3 text elements
+        // in the same container
+        let cont = document.createElement(element.tagName);
+        cont.style.position = "relative";
 
-            // For each skew element
-            for (let i = 1; i <= options.resolution; i++) {
-                let el = document.createElement("p");
-                el.style.position = "absolute";
-                el.style.width = "100%";
+        // Make the container's height the same as what 
+        // the element is currently
+        cont.style.height = element.getBoundingClientRect().height + 'px';
+        cont.style.width = element.getBoundingClientRect().width + 'px';
 
+        // replace
+        element.replaceWith(cont);
 
+        append(el, i, options);
+    }
 
-                let cp = `inset(${
-          /* Top edge */ Math.round(((i - 1) / options.resolution) * 100)
-                    }% 0% ${/* Bottom Edge */ Math.round(((0.9 + options.overlapProtection) - i / options.resolution) * 100)}% 0%)`;
+    function append(el, i, options) {
+        // For each skew element
+        for (let i = 1; i <= options.resolution; i++) {
+            let el = document.createElement("span");
+            el.style.position = "absolute";
+            //  el.style.bottom = '-100%';
+            el.style.width = "100%";
+            el.style.height = cont.style.height;
 
-                el.style.clipPath = cp;
-                el.innerHTML = content;
+            // Helper functions
+            const perc = (n) => (n / options.resolution),
+                lerp = (a, b, t) => (1 - t) * a + t * b;
 
-                setAnimation(el, i, options);
-                cont.append(el);
+            let cp = `inset(${
+          /* Top edge */ Math.round(perc(i - 1) * 100)
+                }% 0% ${/* Bottom Edge */ Math.round(((0.9 + options.overlapProtection) - perc(i)) * 100)}% 0%)`;
+
+            el.style.clipPath = cp;
+
+            if (options.gradient) {
+                let t = perc(i), { from: f, to } = options.gradient;
+                el.style.color = `hsl(${lerp(f[0], to[0], t)}, ${lerp(f[1], to[1], t)}%, ${lerp(f[2], to[2], t)}%)`;
             }
-        }
 
-        Wobbler.tick = 0;
-        function setAnimation(el, i, o) {
-            let delay = i * 100;
-            Wobbler.tick++;
-            el.style.transform =
-                `skew${o.direction.toUpperCase()}(` +
-                Math.sin((Wobbler.tick + delay * o.wobbliness) / (o.speed * o.resolution)) * o.intensity +
-                "deg)";
+            el.innerHTML = content;
 
-            window.requestAnimationFrame(
-                setAnimation.bind(
-                    this,
-                    el,
-                    i,
-                    o
-                )
-            );
+            setAnimation(el, i, options);
+            cont.append(el);
         }
-    },
-    tick: 0,
-};
+    }
+
+    let tick = 0;
+    function setAnimation(el, i, o) {
+        let delay = i * 100;
+        tick++;
+        el.style.transform =
+            `skew${o.direction.toUpperCase()}(` +
+            Math.sin((tick + delay * o.wobbliness) / (o.speed * o.resolution)) * o.intensity +
+            "deg)";
+
+        window.requestAnimationFrame(
+            setAnimation.bind(
+                this,
+                el,
+                i,
+                o
+            )
+        );
+    }
+}

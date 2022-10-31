@@ -5,11 +5,11 @@ Animate wobbles into your text
 Copy index.min.js into a file in your project and reference it in your HTML
 
 ## Usage
-WobbleText adds a `Wobbler` constant to the global window object.
+WobbleText adds a `WobbleText` function to the global window object.
 
 Call the wobble function like this:
 ```js
-Wobbler.wobble(element, {
+WobbleText(element, {
     // options
 })
 ```
@@ -46,6 +46,20 @@ Default is `0`.
 #### `direction`
 A string, either `x` or `y`. This really only changes the way it's skewed (`skewX` vs `skewY`). Default is `x`.
 
+#### `gradient`
+An object with 2 properties: `from` and `to`
+
+These properties contain an array of numbers as HSL values.
+
+Example:
+```js
+gradient: {
+    from: [270, 100, 60], // Purple
+    to: [220, 100, 80]    // Light blue
+}
+```
+
+This will make the text color a gradient from purple top to light blue bottom. It lerps between from and to for each individual element (higher resolution = more accuracy!)
 ## How it works
 - The text is split into a number of \<p\> elements (determined by `options.resolution`)
 - Each element is then `clip-path`ed to a certain vertical/horizontal range. The percentage is determined by its index. 
@@ -60,6 +74,6 @@ A string, either `x` or `y`. This really only changes the way it's skewed (`skew
 The example can be found either at `example.html` or [this Codepen link](https://codepen.io/northernlights3/pen/KKeVKeY).
 
 ---
-_Current Version: 0.1.0 (beta)_
+_Current Version: 0.2.0 (beta)_
 
 _Author: [PineappleRind](https://github.com/pineapplerind)_
