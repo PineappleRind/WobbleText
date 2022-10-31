@@ -13,7 +13,7 @@
     <h1>Wobbling text effect</h1>
     <p id="sub">looks cool doesn't it</p>
     <a href="https://github.com/pineapplerind/wobbletext#how-it-works">how does it work?</a>
-    <script src="src/index.js"></script>
+    <script src="src/index.min.js"></script>
     <script>
         let settings = {
             resolution: 30,
@@ -23,7 +23,7 @@
             overlapProtection: 0.1,
             direction: 'x',
         }
-        Wobbler.wobble(document.querySelector('h1'), settings)
+        WobbleText(document.querySelector('h1'), settings)
     </script>
 </body>
 

@@ -1,4 +1,5 @@
 function WobbleText(...args) {
+    let tick = 0;
     initialize(...args);
 
     function initialize(element, options) {
@@ -22,21 +23,21 @@ function WobbleText(...args) {
 
         // Create a container so we can have 3 text elements
         // in the same container
-        let cont = document.createElement(element.tagName);
-        cont.style.position = "relative";
+        let container = document.createElement(element.tagName);
+        container.style.position = "relative";
 
         // Make the container's height the same as what 
         // the element is currently
-        cont.style.height = element.getBoundingClientRect().height + 'px';
-        cont.style.width = element.getBoundingClientRect().width + 'px';
+        container.style.height = element.getBoundingClientRect().height + 'px';
+        container.style.width = element.getBoundingClientRect().width + 'px';
 
         // replace
-        element.replaceWith(cont);
+        element.replaceWith(container);
 
-        append(el, i, options);
+        append(content, options, container);
     }
 
-    function append(el, i, options) {
+    function append(content, options, cont) {
         // For each skew element
         for (let i = 1; i <= options.resolution; i++) {
             let el = document.createElement("span");
@@ -67,7 +68,6 @@ function WobbleText(...args) {
         }
     }
 
-    let tick = 0;
     function setAnimation(el, i, o) {
         let delay = i * 100;
         tick++;
