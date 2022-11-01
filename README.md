@@ -1,6 +1,4 @@
-# WobbleText
-Animate wobbles into your text
-
+![Wobble Text — the one and only library to animate wiggles into your text](banner.gif) 
 ## Installation
 Copy index.min.js into a file in your project and reference it in your HTML
 
